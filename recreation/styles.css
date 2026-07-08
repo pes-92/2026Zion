@@ -326,21 +326,129 @@ a {
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  gap: 10px 12px;
-  padding: 16px;
+  gap: 14px 16px;
+  padding: 28px 22px;
   border-radius: 8px;
   background: linear-gradient(135deg, rgba(212, 169, 79, 0.16), rgba(47, 111, 94, 0.12)), rgba(255, 255, 255, 0.62);
 }
 
 .cloud-word {
+  position: relative;
   width: auto;
   max-width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 7px 12px;
+  min-height: 46px;
+  padding: 11px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 58% 42% 50% 50% / 46% 55% 45% 54%;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.96) 0 28%, transparent 30%),
+    radial-gradient(circle at 82% 26%, rgba(255, 255, 255, 0.72) 0 22%, transparent 24%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(240, 248, 244, 0.86));
+  box-shadow:
+    0 12px 25px rgba(47, 111, 94, 0.12),
+    inset 0 -8px 16px rgba(47, 111, 94, 0.07);
+  color: #18322c;
+  font-weight: 950;
   line-height: 1.1;
   word-break: keep-all;
+  transform: rotate(var(--tilt, 0deg)) translateY(var(--lift, 0));
+  transform-origin: center;
+}
+
+.cloud-word::before,
+.cloud-word::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 -6px 12px rgba(47, 111, 94, 0.05);
+}
+
+.cloud-word::before {
+  width: 46%;
+  height: 64%;
+  left: 7%;
+  top: -18%;
+}
+
+.cloud-word::after {
+  width: 38%;
+  height: 56%;
+  right: 8%;
+  bottom: -14%;
+}
+
+.tilt-1 {
+  --tilt: -5deg;
+  --lift: 5px;
+}
+
+.tilt-2 {
+  --tilt: 3deg;
+  --lift: -3px;
+}
+
+.tilt-3 {
+  --tilt: -2deg;
+  --lift: 1px;
+}
+
+.tilt-4 {
+  --tilt: 6deg;
+  --lift: 7px;
+}
+
+.tilt-5 {
+  --tilt: -7deg;
+  --lift: -5px;
+}
+
+.tilt-6 {
+  --tilt: 2deg;
+  --lift: 4px;
+}
+
+.tilt-7 {
+  --tilt: -4deg;
+  --lift: -1px;
+}
+
+.tilt-8 {
+  --tilt: 5deg;
+  --lift: -6px;
+}
+
+.tilt-9 {
+  --tilt: -1deg;
+  --lift: 6px;
+}
+
+.puff-1 {
+  border-radius: 61% 39% 56% 44% / 48% 58% 42% 52%;
+}
+
+.puff-2 {
+  border-radius: 48% 52% 44% 56% / 57% 42% 58% 43%;
+}
+
+.puff-3 {
+  border-radius: 54% 46% 62% 38% / 42% 62% 38% 58%;
+}
+
+.puff-4 {
+  border-radius: 42% 58% 50% 50% / 60% 44% 56% 40%;
+}
+
+.puff-5 {
+  border-radius: 64% 36% 43% 57% / 51% 48% 52% 49%;
+}
+
+.puff-6 {
+  border-radius: 50% 50% 59% 41% / 45% 55% 45% 55%;
 }
 
 .guess-grid button.selected {

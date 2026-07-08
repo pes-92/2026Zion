@@ -101,8 +101,12 @@
 
     responseCloud.innerHTML = group.answers.map(function (item, index) {
       const weight = 1 + ((item.answer.length + index) % 5);
+      const tilt = 1 + (index % 9);
+      const puff = 1 + ((item.answer.length + index) % 6);
       return (
-        '<span class="cloud-word weight-' + safe(weight) + '">' + safe(item.answer) + '</span>'
+        '<span class="cloud-word weight-' + safe(weight) + ' tilt-' + safe(tilt) + ' puff-' + safe(puff) + '">' +
+        safe(item.answer) +
+        '</span>'
       );
     }).join("");
     renderReveal();
