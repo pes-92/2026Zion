@@ -30,7 +30,7 @@
           options.map(function (option) {
             return (
               '<label class="option-card">' +
-              '<input type="radio" name="' + safe(answerName) + '" value="' + safe(option) + '">' +
+              '<input type="radio" name="' + safe(answerName) + '" value="' + safe(option) + '" required>' +
               '<span>' + safe(option) + '</span>' +
               '</label>'
             );
@@ -43,10 +43,17 @@
       return (
         '<label class="field question-field">' +
         '<span>' + safe(index + 1) + ". " + safe(text) + '</span>' +
-        '<input name="' + safe(answerName) + '" autocomplete="off" maxlength="36">' +
+        '<input name="' + safe(answerName) + '" autocomplete="off" maxlength="36" required>' +
         '</label>'
       );
     }).join("");
+  }
+
+  function answerFor(index) {
+    const control = form.elements["answer-" + index];
+    if (!control) return "";
+    if (control instanceof RadioNodeList) return control.value.trim();
+    return control.value.trim();
   }
 
   function postSubmission(payload) {
@@ -66,21 +73,34 @@
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     const name = participantName.value.trim();
+    const missing = questions.map(function (_, index) {
+      return answerFor(index) ? null : index + 1;
+    }).filter(Boolean);
+
+    if (!name) {
+      submitStatus.textContent = "이름을 적어주세요.";
+      submitStatus.className = "status warn";
+      participantName.focus();
+      return;
+    }
+
+    if (missing.length) {
+      submitStatus.textContent = "아직 답하지 않은 문항이 있어요: " + missing.join(", ") + "번";
+      submitStatus.className = "status warn";
+      const firstMissing = form.elements["answer-" + (missing[0] - 1)];
+      const target = firstMissing instanceof RadioNodeList ? firstMissing[0] : firstMissing;
+      if (target && target.focus) target.focus();
+      return;
+    }
+
     const answers = questions.map(function (question, index) {
-      const input = form.elements["answer-" + index];
       const text = questionText(question);
       return {
         questionIndex: index,
         question: text,
-        answer: input ? input.value.trim() : ""
+        answer: answerFor(index)
       };
-    }).filter((item) => item.answer);
-
-    if (!answers.length) {
-      submitStatus.textContent = "하나 이상 답변을 적어주세요.";
-      submitStatus.className = "status warn";
-      return;
-    }
+    });
 
     submitStatus.textContent = "제출 중입니다.";
     submitStatus.className = "status";
