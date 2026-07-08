@@ -38,7 +38,7 @@
 현재 연결된 Web App URL:
 
 ```txt
-https://script.google.com/macros/s/AKfycbwNCovbvePtP8F_k7CDipROxq4oG6wz4Nllvn0QZ-fbJ1VlEYyf6HLADdSzKwSwPb8/exec
+https://script.google.com/macros/s/AKfycbxESR_N75y2FlrwegxoCQl0Yfw7paIlc-Nf1gjA9k7v2ek0eJJeFsBJxwwUr89bcyg0/exec
 ```
 
 ```js
@@ -50,3 +50,14 @@ window.RECREATION_CONFIG = {
 ```
 
 참여자에게는 `recreation/index.html`만 공유하고, 진행자는 `recreation/host.html`을 PC에서 직접 열면 됩니다.
+
+## 연결이 안 될 때
+
+Apps Script URL을 열었을 때 Google 로그인 화면이 나오면 웹 앱 접근 권한이 닫혀 있는 상태입니다.
+
+`배포 > 배포 관리`에서 현재 배포를 수정하고 아래처럼 설정합니다.
+
+- 실행 권한: `나`
+- 액세스 권한: `모든 사용자`
+
+수정 후에는 반드시 `새 버전`으로 배포해야 `.../exec` 주소에 반영됩니다.
