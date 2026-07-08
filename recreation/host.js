@@ -9,9 +9,9 @@
   const answerCard = document.getElementById("answerCard");
   const refreshButton = document.getElementById("refreshButton");
   const shuffleButton = document.getElementById("shuffleButton");
+  const participantPicker = document.getElementById("participantPicker");
 
   let responses = [];
-  let order = [];
   let currentParticipant = "";
   let selectedGuess = "";
   let timer = null;
@@ -50,7 +50,8 @@
         groups.set(name, {
           participant: name,
           answers: [],
-          byQuestion: new Map()
+          byQuestion: new Map(),
+          firstSeen: item.timestamp || ""
         });
       }
       groups.get(name).byQuestion.set(String(item.questionIndex), item);
@@ -62,9 +63,7 @@
       });
     });
 
-    return Array.from(groups.values()).sort(function (a, b) {
-      return a.participant.localeCompare(b.participant, "ko");
-    });
+    return Array.from(groups.values());
   }
 
   function currentGroup() {
@@ -73,12 +72,8 @@
 
   function syncOrder(groups) {
     const names = groups.map((group) => group.participant);
-    order = order.filter((name) => names.includes(name));
-    names.forEach(function (name) {
-      if (!order.includes(name)) order.push(name);
-    });
     if (!currentParticipant || !names.includes(currentParticipant)) {
-      currentParticipant = order[0] || "";
+      currentParticipant = names[0] || "";
     }
   }
 
@@ -97,6 +92,7 @@
     syncOrder(groups);
     const group = currentGroup();
     responseCount.textContent = groups.length + "명";
+    renderParticipantPicker(groups);
     if (!group) {
       responseCloud.innerHTML = '<div class="empty">아직 도착한 응답이 없습니다.</div>';
       renderReveal();
@@ -110,6 +106,16 @@
       );
     }).join("");
     renderReveal();
+  }
+
+  function renderParticipantPicker(groups) {
+    participantPicker.innerHTML = groups.length ? groups.map(function (group, index) {
+      const isActive = group.participant === currentParticipant;
+      return (
+        '<button type="button" data-participant="' + safe(group.participant) + '"' +
+        (isActive ? ' class="selected"' : "") + '>' + safe(index + 1) + '</button>'
+      );
+    }).join("") : '<span class="empty">응답자 번호가 여기에 표시됩니다.</span>';
   }
 
   function renderReveal() {
@@ -144,25 +150,25 @@
   function shuffle() {
     const groups = groupedResponses();
     syncOrder(groups);
-    if (!order.length) {
+    if (!groups.length) {
       renderCloud();
       return;
     }
-    const available = order.filter((name) => name !== currentParticipant);
-    const candidates = available.length ? available : order;
+    const names = groups.map((group) => group.participant);
+    const available = names.filter((name) => name !== currentParticipant);
+    const candidates = available.length ? available : names;
     currentParticipant = candidates[Math.floor(Math.random() * candidates.length)];
     selectedGuess = "";
-    const group = currentGroup();
-    if (group) {
-      for (let index = group.answers.length - 1; index > 0; index -= 1) {
-        const other = Math.floor(Math.random() * (index + 1));
-        const temp = group.answers[index];
-        group.answers[index] = group.answers[other];
-        group.answers[other] = temp;
-      }
-    }
     renderCloud();
   }
+
+  participantPicker.addEventListener("click", function (event) {
+    const button = event.target.closest("[data-participant]");
+    if (!button) return;
+    currentParticipant = button.dataset.participant;
+    selectedGuess = "";
+    renderCloud();
+  });
 
   guessGrid.addEventListener("click", function (event) {
     const button = event.target.closest("[data-guess]");
@@ -178,8 +184,16 @@
     if (!group) return;
     const correct = selectedGuess && selectedGuess === group.participant;
     answerCard.hidden = false;
+    if (!correct) {
+      answerCard.innerHTML = [
+        '<p class="miss">' + safe(selectedGuess ? "선택한 답: " + selectedGuess : "선택한 답 없음") + '</p>',
+        '<p class="miss">아직 정답이 아닙니다.</p>'
+      ].join("");
+      return;
+    }
+
     answerCard.innerHTML = [
-      '<p class="' + (correct ? "correct" : "miss") + '">' + safe(selectedGuess ? "선택한 답: " + selectedGuess : "선택한 답 없음") + '</p>',
+      '<p class="correct">' + safe("선택한 답: " + selectedGuess) + '</p>',
       '<dl>',
       '<dt>정답</dt><dd>' + safe(group.participant) + '</dd>',
       '</dl>',

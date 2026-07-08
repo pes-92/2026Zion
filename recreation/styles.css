@@ -292,6 +292,34 @@ a {
   font-weight: 900;
 }
 
+.host-picker {
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(23, 33, 43, 0.14);
+}
+
+.participant-picker-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.participant-picker-grid button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(23, 33, 43, 0.2);
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+  font-weight: 950;
+}
+
+.participant-picker-grid button.selected {
+  border-color: var(--green);
+  background: var(--green);
+  color: white;
+}
+
 .response-cloud {
   min-height: 56vh;
   display: flex;
