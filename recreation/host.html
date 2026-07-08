@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>누구의 답일까? 진행자</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="host-body">
+  <main class="host-shell">
+    <header class="host-top">
+      <div>
+        <p class="eyebrow">진행자 화면</p>
+        <h1>누구일까요?</h1>
+      </div>
+      <div class="host-actions">
+        <a class="ghost-button" href="index.html" target="_blank" rel="noreferrer">설문 열기</a>
+        <button class="ghost-button" id="refreshButton" type="button">새로고침</button>
+        <button class="ghost-button" id="shuffleButton" type="button">다른 사람</button>
+      </div>
+    </header>
+
+    <section class="connection-panel" id="connectionPanel"></section>
+
+    <section class="host-grid">
+      <div class="cloud-panel">
+        <div class="cloud-head">
+          <div>
+            <p class="eyebrow">응답 구름</p>
+            <h2>이 답변은 누구의 답변일까요?</h2>
+          </div>
+          <p class="count" id="responseCount">0명</p>
+        </div>
+        <div class="response-cloud" id="responseCloud">
+          <div class="empty">응답을 불러오는 중입니다.</div>
+        </div>
+      </div>
+
+      <aside class="reveal-panel">
+        <p class="eyebrow">정답 공개</p>
+        <h2 id="selectedAnswer">응답을 기다리는 중입니다.</h2>
+        <div class="guess-grid" id="guessGrid"></div>
+        <button class="primary-button" id="revealButton" type="button" disabled>정답 보기</button>
+        <div class="answer-card" id="answerCard" hidden></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="questions.js"></script>
+  <script src="host.js"></script>
+</body>
+</html>

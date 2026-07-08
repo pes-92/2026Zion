@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>메인스토리 | 강하고 담대하라</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="game-layout">
+    <header class="topbar">
+      <div>
+        <p id="teamLabel">한 팀 · 역할 미션</p>
+        <h1>문제풀이담당</h1>
+      </div>
+      <button class="icon-button" id="resetButton" type="button" aria-label="진행 초기화">↺</button>
+    </header>
+
+    <section class="story-stage">
+      <div class="scene-art" id="sceneArt" aria-hidden="true"></div>
+      <div class="progress" id="progressDots"></div>
+      <p class="kicker" id="sceneKicker"></p>
+      <div class="story-nav" id="storyNav" hidden>
+        <button type="button" id="prevSceneButton">이전</button>
+        <button type="button" id="nextSceneButton">다음</button>
+      </div>
+      <h2 id="sceneTitle"></h2>
+      <div class="story-copy" id="sceneText"></div>
+      <div class="mission-box">
+        <span>MISSION</span>
+        <div id="sceneMission"></div>
+      </div>
+    </section>
+
+    <form class="answer-panel" id="answerForm">
+      <label for="answerInput" id="answerLabel">정답 입력</label>
+      <div class="answer-row">
+        <input id="answerInput" name="answer" autocomplete="off" inputmode="text">
+        <button type="submit">확인</button>
+      </div>
+      <div class="choice-buttons" id="choiceButtons" hidden></div>
+      <p class="feedback" id="feedback" role="status"></p>
+      <button class="next-button" id="nextButton" type="button" hidden>다음</button>
+    </form>
+  </main>
+
+  <script src="game-data.js"></script>
+  <script src="final-gate.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
