@@ -128,10 +128,10 @@ window.SION_GAME = {
     {
       code: "타일",
       title: "30개의 타일조각",
-      image: "image/tile_pack.png",
+      image: ["image/tile_pack.png", "image/Sheet music_Q.png"],
       text: [
         "타일을 모두 모아보니 30개다.",
-        "여기에서 필요한 타일은 7개뿐인데, 더 자세히 알아보려면 악보가 필요하다."
+        "여기에서 필요한 타일은 7개뿐인데, 더 자세히 알아보려면 악보를 연주할 방법이 필요하다."
       ],
       tell: "{search1}이(가) 가지고 있는 탐험키트에서 '악보'를 연주할 방법을 찾아보자.",
       tags: ["PART 3", "악보"]

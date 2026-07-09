@@ -176,7 +176,7 @@
 
   function render() {
     document.documentElement.style.setProperty("--team-color", data.team.color);
-    teamLabel.textContent = "한 팀 · 역할 미션";
+    teamLabel.textContent = "팀별미션 - 보물찾기";
     if (!names.ready) {
       renderNameSetup();
       return;
@@ -206,7 +206,7 @@
     const isCorrect = scene.answer.some((answer) => normalize(answer) === typed);
 
     if (!isCorrect) {
-      feedback.textContent = "아직 아니야. 역할별 화면에서 열린 단서와 팀원들의 말을 다시 맞춰보자.";
+      feedback.textContent = "이게 아닌 것 같다. 다시 생각해보자.";
       feedback.className = "feedback warn";
       return;
     }

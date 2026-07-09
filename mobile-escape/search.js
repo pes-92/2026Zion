@@ -90,7 +90,7 @@
 
   function render() {
     document.documentElement.style.setProperty("--team-color", data.team.color);
-    teamLabel.textContent = "한 팀 · 역할 미션";
+    teamLabel.textContent = "팀별미션 - 보물찾기";
     setupStage.hidden = Boolean(names.ready);
     nameSetupForm.hidden = Boolean(names.ready);
     clueSearch.hidden = !names.ready;
