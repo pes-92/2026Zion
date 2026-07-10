@@ -62,13 +62,23 @@
     if (input) input.value = "";
   }
 
+  function renderImages(imageValue) {
+    const images = Array.isArray(imageValue) ? imageValue : [imageValue];
+    return images.map(function (image) {
+      const source = typeof image === "string" ? image : image && image.src;
+      const alt = typeof image === "string" ? "" : (image.alt || "");
+      if (!source) return "";
+      return (
+        '<button class="clue-image-button" type="button" data-zoom-src="' + safe(source) + '">' +
+        '<img class="clue-image" src="' + safe(source) + '" alt="' + safe(alt) + '">' +
+        '</button>'
+      );
+    }).filter(Boolean).join("");
+  }
+
   function renderCard(item) {
     const background = backgroundForTags(item.tags);
-    const image = item.image ? (
-      '<button class="clue-image-button" type="button" data-zoom-src="' + safe(item.image) + '">' +
-      '<img class="clue-image" src="' + safe(item.image) + '" alt="">' +
-      '</button>'
-    ) : "";
+    const image = item.image ? renderImages(item.image) : "";
     return (
       '<article class="clue-card">' +
       '<div class="clue-card-art" style="--scene-bg: url(\'' + background + '\')"></div>' +

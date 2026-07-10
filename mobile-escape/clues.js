@@ -90,16 +90,26 @@
     return "";
   }
 
+  function renderImages(imageValue) {
+    const images = Array.isArray(imageValue) ? imageValue : [imageValue];
+    return images.map(function (image) {
+      const source = typeof image === "string" ? image : image && image.src;
+      const alt = typeof image === "string" ? "" : (image.alt || "");
+      if (!source) return "";
+      return (
+        '<button class="clue-image-button" type="button" data-zoom-src="' + safe(source) + '">' +
+        '<img class="clue-image" src="' + safe(source) + '" alt="' + safe(alt) + '">' +
+        '</button>'
+      );
+    }).filter(Boolean).join("");
+  }
+
   function renderCard(item) {
     const paragraphs = item.text.map((line) => "<p>" + safe(fill(line)) + "</p>").join("");
     const links = (item.links || []).map((link) => (
       '<a class="inline-link" href="' + safe(link.url) + '" target="_blank" rel="noreferrer">' + safe(link.label) + '</a>'
     )).join("");
-    const image = item.image ? (
-      '<button class="clue-image-button" type="button" data-zoom-src="' + safe(item.image) + '">' +
-      '<img class="clue-image" src="' + safe(item.image) + '" alt="">' +
-      '</button>'
-    ) : "";
+    const image = item.image ? renderImages(item.image) : "";
     const background = backgroundForTags(item.tags);
     return (
       '<article class="clue-card">' +
